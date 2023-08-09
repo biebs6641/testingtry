@@ -1,21 +1,20 @@
-import PyPDF2
+import pandas as pd
 
-def extract_data_from_pdf(pdf_path):
-   extracted_data = []
+# Assuming df1, df2, df3, ... are your dataframes
+dataframes = [df1, df2, df3, df4, df5, df6, df7]  # Add all your dataframes to this list
 
-   with open(pdf_path, 'rb') as pdf_file:
-       pdf_reader = PyPDF2.PdfReader(pdf_file)
-       num_pages = len(pdf_reader.pages)
+identifier_dict = {}
 
-       for page_num in range(num_pages):
-           page = pdf_reader.pages[page_num]
-           text = page.extract_text()
-           extracted_data.append(text)
+# Loop through each dataframe and record the identifiers and their corresponding indices
+for idx, df in enumerate(dataframes, start=1):
+    identifier_column = df.columns[0]  # Assuming the identifier column is the first column
+    for identifier in df[identifier_column]:
+        if identifier in identifier_dict:
+            identifier_dict[identifier].append(idx)
+        else:
+            identifier_dict[identifier] = [idx]
 
-   return extracted_data
-
-pdf_path = 'path/to/your/pdf/file.pdf'
-extracted_data = extract_data_from_pdf(pdf_path)
-
-for data in extracted_data:
-   print(data)
+# Loop through the dictionary and print the overlapping indices for each identifier
+for identifier, indices in identifier_dict.items():
+    if len(indices) > 1:
+        print(f"{identifier} : {', '.join(map(str, indices))}")
