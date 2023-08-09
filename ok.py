@@ -1,20 +1,16 @@
 import pandas as pd
 
-# Assuming df1, df2, df3, ... are your dataframes
-dataframes = [df1, df2, df3, df4, df5, df6, df7]  # Add all your dataframes to this list
+# Number of dataframes you want to create
+num_dataframes = 5
 
-identifier_dict = {}
+# Dictionary to store empty dataframes
+empty_dataframes = {}
 
-# Loop through each dataframe and record the identifiers and their corresponding indices
-for idx, df in enumerate(dataframes, start=1):
-    identifier_column = df.columns[0]  # Assuming the identifier column is the first column
-    for identifier in df[identifier_column]:
-        if identifier in identifier_dict:
-            identifier_dict[identifier].append(idx)
-        else:
-            identifier_dict[identifier] = [idx]
+# Create empty dataframes in a loop
+for i in range(1, num_dataframes + 1):
+    dataframe_name = f"df_{i}"  # Change this to your naming convention
+    empty_dataframes[dataframe_name] = pd.DataFrame(columns=['identifier'])  # Replace 'identifier' with your column name
 
-# Loop through the dictionary and print the overlapping indices for each identifier
-for identifier, indices in identifier_dict.items():
-    if len(indices) > 1:
-        print(f"{identifier} : {', '.join(map(str, indices))}")
+# Print the created empty dataframes
+for df_name, df in empty_dataframes.items():
+    print(f"Empty DataFrame '{df_name}':\n{df}")
