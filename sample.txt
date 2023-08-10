@@ -1,0 +1,28 @@
+import fitz  # Import PyMuPDF
+
+def extract_data_from_pdf(pdf_path):
+   extracted_data = []
+
+   pdf_document = fitz.open(pdf_path)  # Open the PDF document
+
+   for page_num in range(pdf_document.page_count):
+       page = pdf_document[page_num]  # Get the page
+       text = page.get_text("text")  # Extract text using PyMuPDF
+
+       # Split text into lines and add each line as a separate item
+       lines = text.split('\n')
+       extracted_data.extend(lines)
+
+   pdf_document.close()  # Close the PDF document
+
+   return extracted_data
+
+pdf_path = 'path/to/your/pdf/file.pdf'
+extracted_data = extract_data_from_pdf(pdf_path)
+
+for line in extracted_data:
+   print(line)
+
+ 
+
+Can you please send this to my VDI
