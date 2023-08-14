@@ -1,28 +1,15 @@
-import fitz  # Import PyMuPDF
+import pandas as pd
 
-def extract_data_from_pdf(pdf_path):
-   extracted_data = []
+data = [
+    [1, 1, 1],
+    [2, 2, 2],
+    [3, 3, 3]
+]
 
-   pdf_document = fitz.open(pdf_path)  # Open the PDF document
+columns = ['Age', 'Red', 'Flag']
+index_labels = ['A', 'B', 'C']
 
-   for page_num in range(pdf_document.page_count):
-       page = pdf_document[page_num]  # Get the page
-       text = page.get_text("text")  # Extract text using PyMuPDF
+df = pd.DataFrame(data, columns=columns)
+df = pd.DataFrame([columns], columns=index_labels).append(df, ignore_index=True)
 
-       # Split text into lines and add each line as a separate item
-       lines = text.split('\n')
-       extracted_data.extend(lines)
-
-   pdf_document.close()  # Close the PDF document
-
-   return extracted_data
-
-pdf_path = 'path/to/your/pdf/file.pdf'
-extracted_data = extract_data_from_pdf(pdf_path)
-
-for line in extracted_data:
-   print(line)
-
- 
-
-Can you please send this to my VDI
+print(df)
