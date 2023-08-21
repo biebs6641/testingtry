@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Report</title>
+<style>
+table {
+border-collapse: collapse;
+width: 100%;
+}
+th, td {
+border: 1px solid black;
+padding: 8px;
+text-align: center;
+}
+th {
+background-color: lightgray;
+}
+.matching {
+color: green;
+}
+.not-matching {
+color: red;
+}
+</style>
+</head>
+<body>
+<h1>Data Report</h1>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Quantity</th>
+<th>Matching Status</th> <!-- New column header -->
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apple</td>
+<td>2</td>
+<td class="matching">Matching</td> <!-- New column for matching status -->
+</tr>
+<tr>
+<td>Orange</td>
+<td>4</td>
+<td class="not-matching">Not Matching</td> <!-- New column for matching status -->
+</tr>
+<!-- Add more data rows as needed -->
+</tbody>
+</table>
+</body>
+</html>
