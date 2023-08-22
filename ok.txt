@@ -8,6 +8,13 @@ if %errorlevel% neq 0 (
     exit /b
 )
 
+REM Check if requirements.txt file exists
+if not exist requirements.txt (
+    echo requirements.txt file not found. Please make sure the file exists in the same directory.
+    pause
+    exit /b
+)
+
 REM Check and install dependencies from requirements.txt if not already installed
 for /f %%i in (requirements.txt) do (
     pip show %%i > nul 2>&1
