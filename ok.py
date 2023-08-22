@@ -14,3 +14,4 @@ for i in range(1, num_dataframes + 1):
 # Print the created empty dataframes
 for df_name, df in empty_dataframes.items():
     print(f"Empty DataFrame '{df_name}':\n{df}")
+=MID(A1,SEARCH("in",A1)+3,LEN(A1)-SEARCH("in",A1)-2)
