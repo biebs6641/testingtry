@@ -1,0 +1,29 @@
+@echo off
+
+REM Check if Python is installed
+python --version > nul 2>&1
+if %errorlevel% neq 0 (
+    echo Python is not installed. Please install Python and try again.
+    pause
+    exit /b
+)
+
+REM Check and install dependencies from requirements.txt if not already installed
+for /f %%i in (requirements.txt) do (
+    pip show %%i > nul 2>&1
+    if %errorlevel% neq 0 (
+        echo Installing %%i...
+        pip install %%i
+    ) else (
+        echo %%i is already installed.
+    )
+)
+
+REM Run a.py
+python a.py
+
+REM Run b.py
+python b.py
+
+echo Finished running scripts.
+pause
