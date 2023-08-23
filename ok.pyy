@@ -1,0 +1,28 @@
+import pandas as pd
+
+# Create the DataFrames
+data1 = {'Name': ['A', 'B', 'C', 'D', 'E'],
+         'Count': [11, 12, 13, 14, 15]}
+df1 = pd.DataFrame(data1)
+
+data2 = {'Name': ['A', 'B', 'C', 'D', 'E'],
+         'Count': [11, 45, 13, 14, 15]}
+df2 = pd.DataFrame(data2)
+
+# Merge the DataFrames to compare
+merged_df = df1.merge(df2, on='Name', suffixes=('_df1', '_df2'))
+
+# Compare the values and create the report
+def compare_values(row):
+    if row['Count_df1'] == row['Count_df2']:
+        return 'match'
+    else:
+        return 'mismatch'
+
+merged_df['Result'] = merged_df.apply(compare_values, axis=1)
+
+# Create the HTML report
+report_html = merged_df.to_html(index=False)
+
+# Print or save the HTML report
+print(report_html)
