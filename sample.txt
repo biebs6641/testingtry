@@ -13,17 +13,15 @@ DF2 = pd.DataFrame(data2)
 merged_df = pd.merge(DF1, DF2, on='header', how='outer', suffixes=('_DF1', '_DF2'))
 
 # Add a new column indicating match status
-def style_match_status(val):
-    if val == 'Matched':
-        return 'color: green'
-    elif val == 'Mismatched':
-        return 'color: red'
-    elif val == 'Invalid data':
+def style_match_status(row):
+    if pd.isna(row['count_DF1']) or pd.isna(row['count_DF2']):
         return 'color: yellow'
+    elif row['count_DF1'] == row['count_DF2']:
+        return 'color: green'
     else:
-        return ''
+        return 'color: red'
 
-merged_df['match_status_styled'] = merged_df['match_status'].apply(style_match_status)
+merged_df['match_status_styled'] = merged_df.apply(style_match_status, axis=1)
 
 # Format the DataFrame to display integers and apply styles
 styled_df = (merged_df
