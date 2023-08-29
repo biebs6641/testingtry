@@ -31,4 +31,7 @@ def style_match_status(match_status):
         return ''
 
 # Create a styled DataFrame
-styled_df = merged_df
+styled_df = merged_df.style.applymap(style_match_status, subset=['match_status'])
+
+# Display the styled DataFrame
+styled_df
