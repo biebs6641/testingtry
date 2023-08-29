@@ -1,4 +1,5 @@
 import pandas as pd
+from IPython.display import display
 
 # Create DataFrames
 data1 = {'header': ['A', 'B', 'C', 'D', 'E'],
@@ -19,15 +20,19 @@ merged_df['match_status'] = merged_df.apply(
     axis=1
 )
 
-# Define a color mapping dictionary
-color_map = {
-    'Matched': 'green',
-    'Mismatched': 'red',
-    'Invalid data': 'yellow'
-}
+# Define a function to apply styling to the match_status column
+def style_match_status(val):
+    if val == 'Mismatched':
+        return 'background-color: lightcoral'
+    elif val == 'Matched':
+        return 'background-color: lightgreen'
+    elif val == 'Invalid data':
+        return 'background-color: lightyellow'
+    else:
+        return ''
 
-# Apply the color mapping to the match_status column
-merged_df['match_status'] = merged_df['match_status'].apply(lambda x: f'<font color="{color_map[x]}">{x}</font>')
+# Apply the styling function to the match_status column
+styled_df = merged_df.style.applymap(style_match_status, subset=['match_status'])
 
-# Display the DataFrame
-display(merged_df)
+# Display the styled DataFrame
+display(styled_df)
