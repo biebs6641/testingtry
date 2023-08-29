@@ -33,7 +33,7 @@ def style_match_status(match_status):
 styled_df = merged_df.style.applymap(style_match_status, subset=['match_status'])
 
 # Save the styled DataFrame as an HTML report
-styled_html = styled_df.render()
+styled_html = styled_df.to_html(index=False, escape=False)
 
 # Save the HTML to a file
 with open('styled_report.html', 'w') as f:
