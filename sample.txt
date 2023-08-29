@@ -1,15 +1,24 @@
 import pandas as pd
+import numpy as np
 
-data = [
-    [1, 1, 1],
-    [2, 2, 2],
-    [3, 3, 3]
-]
+# Create DataFrames
+data1 = {'header': ['A', 'B', 'C', 'D', 'E'],
+         'count': [1, 2, 3, 4, 90]}
+DF1 = pd.DataFrame(data1)
 
-columns = ['Age', 'Red', 'Flag']
-index_labels = ['A', 'B', 'C']
+data2 = {'header': ['A', 'B', 'C', 'D', 'F'],
+         'count': [1, 2, 678, 4, 34]}
+DF2 = pd.DataFrame(data2)
 
-df = pd.DataFrame(data, columns=columns)
-df = pd.DataFrame([columns], columns=index_labels).append(df, ignore_index=True)
+# Perform an outer merge
+merged_df = pd.merge(DF1, DF2, on='header', how='outer', suffixes=('_DF1', '_DF2'))
 
-print(df)
+# Add a new column indicating match status
+merged_df['match_status'] = merged_df.apply(
+    lambda row: 'Invalid data' if (np.isnan(row['count_DF1']) and not np.isnan(row['count_DF2'])) or
+                                   (not np.isnan(row['count_DF1']) and np.isnan(row['count_DF2'])) else
+                                   ('Matched' if row['count_DF1'] == row['count_DF2'] else 'Mismatched'),
+    axis=1
+)
+
+print(merged_df)
