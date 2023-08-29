@@ -47,3 +47,58 @@ def color_match_status(status):
 styled_df = df.style.applymap(color_match_status, subset=['match_status'])
 
 styled_df
+
+
+
+#########33333333333333333
+
+import pandas as pd
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from reportlab.lib import colors
+
+# Create a sample DataFrame
+data = {'header': ['A', 'B', 'C', 'D', 'E'],
+        'count': [1, 2, 3, 4, 90],
+        'match_status': ['Matched', 'Matched', 'Mismatched', 'Matched', 'Invalid data']}
+df = pd.DataFrame(data)
+
+# Define a function to apply text color based on match status
+def color_match_status(status):
+    if status == 'Matched':
+        return colors.green
+    elif status == 'Mismatched':
+        return colors.red
+    elif status == 'Invalid data':
+        return colors.yellow
+    else:
+        return colors.black
+
+# Apply text color formatting to the DataFrame
+styled_df = df.style.applymap(color_match_status, subset=['match_status'])
+
+# Convert the styled DataFrame to an HTML table
+html_table = styled_df.render()
+
+# Create a PDF document
+pdf_file = "colored_dataframe.pdf"
+doc = SimpleDocTemplate(pdf_file, pagesize=letter)
+
+# Convert the HTML table to a Table object
+table = Table([html_table])
+
+# Apply table style (optional)
+table.setStyle(TableStyle([
+    ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+    ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+    ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+    ('GRID', (0, 0), (-1, -1), 1, colors.black)
+]))
+
+# Build the PDF document with the table
+doc.build([table])
+
+print(f"PDF saved as {pdf_file}")
