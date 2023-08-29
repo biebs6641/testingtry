@@ -22,3 +22,28 @@ merged_df['match_status'] = merged_df.apply(
 )
 
 print(merged_df)
+
+
+import pandas as pd
+
+# Create a sample DataFrame
+data = {'header': ['A', 'B', 'C', 'D', 'E'],
+        'count': [1, 2, 3, 4, 90],
+        'match_status': ['Matched', 'Matched', 'Mismatched', 'Matched', 'Invalid data']}
+df = pd.DataFrame(data)
+
+# Define a function to apply text color based on match status
+def color_match_status(status):
+    if status == 'Matched':
+        return 'color: green'
+    elif status == 'Mismatched':
+        return 'color: red'
+    elif status == 'Invalid data':
+        return 'color: yellow'
+    else:
+        return ''
+
+# Apply formatting to the 'match_status' column
+styled_df = df.style.applymap(color_match_status, subset=['match_status'])
+
+styled_df
