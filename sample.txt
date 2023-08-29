@@ -19,6 +19,9 @@ merged_df['match_status'] = merged_df.apply(
     axis=1
 )
 
+# Create the styled DataFrame
+styled_df = merged_df.copy()
+
 # Define a CSS styling function
 def style_match_status(match_status):
     if match_status == 'Matched':
@@ -31,7 +34,7 @@ def style_match_status(match_status):
         return ''
 
 # Apply the styling function to the match_status column
-styled_df = merged_df.style.applymap(style_match_status, subset=['match_status'])
+styled_df['match_status'] = styled_df['match_status'].apply(style_match_status)
 
 # Display the styled DataFrame
 styled_df
