@@ -19,19 +19,15 @@ merged_df['match_status'] = merged_df.apply(
     axis=1
 )
 
-# Define a CSS styling function
-def style_match_status(match_status):
-    if match_status == 'Matched':
-        return 'color: green'
-    elif match_status == 'Mismatched':
-        return 'color: red'
-    elif match_status == 'Invalid data':
-        return 'color: yellow'
-    else:
-        return ''
+# Define a color mapping dictionary
+color_map = {
+    'Matched': 'green',
+    'Mismatched': 'red',
+    'Invalid data': 'yellow'
+}
 
-# Create a styled DataFrame
-styled_df = merged_df.style.applymap(style_match_status, subset=['match_status'])
+# Apply the color mapping to the match_status column
+merged_df['match_status'] = merged_df['match_status'].apply(lambda x: f'<font color="{color_map[x]}">{x}</font>')
 
-# Display the styled DataFrame
-styled_df
+# Display the DataFrame
+display(merged_df)
