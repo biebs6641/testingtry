@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 # Create DataFrames
 data1 = {'header': ['A', 'B', 'C', 'D', 'E'],
@@ -13,21 +14,27 @@ DF2 = pd.DataFrame(data2)
 merged_df = pd.merge(DF1, DF2, on='header', how='outer', suffixes=('_DF1', '_DF2'))
 
 # Add a new column indicating match status
-def style_match_status(row):
-    if pd.isna(row['count_DF1']) or pd.isna(row['count_DF2']):
-        return 'color: yellow'
-    elif row['count_DF1'] == row['count_DF2']:
+merged_df['match_status'] = merged_df.apply(
+    lambda row: 'Matched' if not np.isnan(row['count_DF1']) and not np.isnan(row['count_DF2']) and row['count_DF1'] == row['count_DF2'] else
+    ('Invalid data' if np.isnan(row['count_DF1']) or np.isnan(row['count_DF2']) else 'Mismatched'),
+    axis=1
+)
+
+# Define a function to apply styles to the match_status column
+def style_match_status(match_status):
+    if match_status == 'Matched':
         return 'color: green'
-    else:
+    elif match_status == 'Mismatched':
         return 'color: red'
+    elif match_status == 'Invalid data':
+        return 'color: yellow'
 
-merged_df['match_status_styled'] = merged_df.apply(style_match_status, axis=1)
+# Apply styles to the DataFrame
+styled_df = merged_df.style.applymap(style_match_status, subset=['match_status'])
 
-# Format the DataFrame to display integers and apply styles
-styled_df = (merged_df
-             .style
-             .format({'count_DF1': '{:.0f}', 'count_DF2': '{:.0f}'})
-             .applymap(lambda x: 'color: black', subset=['count_DF1', 'count_DF2'])
-             .applymap(lambda x: x, subset=['match_status_styled']))
+# Save the styled DataFrame as an HTML report
+styled_html = styled_df.render()
 
-styled_df
+# Save the HTML to a file
+with open('styled_report.html', 'w') as f:
+    f.write(styled_html)
