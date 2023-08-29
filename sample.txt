@@ -102,3 +102,44 @@ table.setStyle(TableStyle([
 doc.build([table])
 
 print(f"PDF saved as {pdf_file}")
+
+##############4444444444444
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from pandas.plotting import table
+
+# Create a sample DataFrame
+data = {'header': ['A', 'B', 'C', 'D', 'E'],
+        'count': [1, 2, 3, 4, 90],
+        'match_status': ['Matched', 'Matched', 'Mismatched', 'Matched', 'Invalid data']}
+df = pd.DataFrame(data)
+
+# Define a function to apply text color based on match status
+def color_match_status(val):
+    if val == 'Matched':
+        return 'color: green'
+    elif val == 'Mismatched':
+        return 'color: red'
+    elif val == 'Invalid data':
+        return 'color: yellow'
+    else:
+        return ''
+
+# Apply text color formatting to the DataFrame
+styled_df = df.style.applymap(color_match_status, subset=['match_status'])
+
+# Create a plot with the styled DataFrame
+fig, ax = plt.subplots(figsize=(8, 3))
+tbl = table(ax, styled_df, loc='center', cellLoc='center')
+tbl.auto_set_font_size(False)
+tbl.set_fontsize(10)
+tbl.scale(1.2, 1.2)
+ax.axis('off')
+
+# Save the plot as a PDF
+pdf_file = "colored_dataframe.pdf"
+plt.savefig(pdf_file, bbox_inches='tight')
+plt.close()
+
+print(f"PDF saved as {pdf_file}")
