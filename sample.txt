@@ -1,38 +1,29 @@
 import pandas as pd
-from IPython.display import display
 
-# Create DataFrames
-data1 = {'header': ['A', 'B', 'C', 'D', 'E'],
-         'count': [1, 2, 3, 4, 90]}
-DF1 = pd.DataFrame(data1)
+# Assuming 'df' is your DataFrame
+# Replace it with the actual variable name of your DataFrame
 
-data2 = {'header': ['A', 'B', 'C', 'D', 'F'],
-         'count': [1, 2, 678, 4, 34]}
-DF2 = pd.DataFrame(data2)
+# Create a string for custom CSS styling
+custom_css = """
+<style>
+    th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #e6e6e6;
+    }
+</style>
+"""
 
-# Perform an outer merge
-merged_df = pd.merge(DF1, DF2, on='header', how='outer', suffixes=('_DF1', '_DF2'))
+# Add the heading
+heading = "<h1>Report for abc</h1>"
 
-# Add a new column indicating match status
-merged_df['match_status'] = merged_df.apply(
-    lambda row: 'Invalid data' if pd.isna(row['count_DF1']) or pd.isna(row['count_DF2']) else
-    ('Matched' if row['count_DF1'] == row['count_DF2'] else 'Mismatched'),
-    axis=1
-)
+# Export DataFrame to HTML with custom CSS and heading
+html_output = custom_css + heading + df.to_html(index=False, escape=False)
 
-# Define a function to apply styling to the match_status column
-def style_match_status(val):
-    if val == 'Mismatched':
-        return 'background-color: lightcoral'
-    elif val == 'Matched':
-        return 'background-color: lightgreen'
-    elif val == 'Invalid data':
-        return 'background-color: lightyellow'
-    else:
-        return ''
-
-# Apply the styling function to the match_status column
-styled_df = merged_df.style.applymap(style_match_status, subset=['match_status'])
-
-# Display the styled DataFrame
-display(styled_df)
+# Save the HTML to a file (optional)
+with open("styled_report.html", "w") as f:
+    f.write(html_output)
