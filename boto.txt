@@ -1,4 +1,4 @@
-[17:29] S P, Aakash (Cognizant)
+
 
 import boto3
 
