@@ -1,0 +1,52 @@
+[17:29] S P, Aakash (Cognizant)
+
+import boto3
+
+import time
+
+
+# Initialize the Glue client
+
+glue_client = boto3.client('glue', region_name='your-region')  # Replace 'your-region' with your AWS region
+
+
+# Specify the name of your Glue job
+
+job_name = 'your-job-name'
+
+
+# Start a new run of the Glue job
+
+try:
+
+    response = glue_client.start_job_run(JobName=job_name)
+
+    job_run_id = response['JobRunId']
+
+    print(f"Started a new run of Glue job '{job_name}' with run ID '{job_run_id}'.")
+
+
+    # Check the status periodically until it's no longer "STARTING"
+
+    while True:
+
+        job_run_response = glue_client.get_job_run(JobName=job_name, RunId=job_run_id)
+
+        status = job_run_response['JobRun']['JobRunState']
+
+        print(f"Job status: {status}")
+
+
+        if status != 'STARTING':
+
+            break  # Exit the loop when the job run is no longer starting
+
+        else:
+
+            time.sleep(10)  # Wait for a few seconds before checking again
+
+except Exception as e:
+
+    print(f"Error starting Glue job: {str(e)}")
+
+Please send this code in vdi
