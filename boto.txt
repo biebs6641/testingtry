@@ -1,52 +1,34 @@
-
-
 import boto3
-
 import time
 
-
 # Initialize the Glue client
-
-glue_client = boto3.client('glue', region_name='your-region')  # Replace 'your-region' with your AWS region
-
+glue_client = boto3.client('glue', region_name='your-region')
 
 # Specify the name of your Glue job
-
 job_name = 'your-job-name'
 
+# Specify the S3 bucket and key where your file is uploaded
+s3_bucket = 'your-s3-bucket'
+s3_key = 'path/to/your/uploaded-file'
 
-# Start a new run of the Glue job
-
+# Poll for the file's successful processing
+while True:
 try:
+# Check the status of the Glue job
+response = glue_client.get_job_runs(JobName=job_name, MaxResults=1)
+if 'JobRuns' in response and response['JobRuns']:
+latest_run = response['JobRuns'][0]
+status = latest_run['JobRunState']
+print(f"Latest job run status: {status}")
 
-    response = glue_client.start_job_run(JobName=job_name)
+# Check if the job run is successful, you can customize this condition
+if status == 'SUCCEEDED':
+print(f"File processing successful for '{s3_key}'")
+break
+else:
+print("No job runs found. Waiting...")
 
-    job_run_id = response['JobRunId']
-
-    print(f"Started a new run of Glue job '{job_name}' with run ID '{job_run_id}'.")
-
-
-    # Check the status periodically until it's no longer "STARTING"
-
-    while True:
-
-        job_run_response = glue_client.get_job_run(JobName=job_name, RunId=job_run_id)
-
-        status = job_run_response['JobRun']['JobRunState']
-
-        print(f"Job status: {status}")
-
-
-        if status != 'STARTING':
-
-            break  # Exit the loop when the job run is no longer starting
-
-        else:
-
-            time.sleep(10)  # Wait for a few seconds before checking again
-
+# Add a delay (e.g., 5 seconds) before the next status check
+time.sleep(5)
 except Exception as e:
-
-    print(f"Error starting Glue job: {str(e)}")
-
-Please send this code in vdi
+print(f"Error checking Glue job status: {str(e)}")
