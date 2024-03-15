@@ -12,13 +12,16 @@ df = df.sort_values(by='Score', ascending=False)
 
 # Define a function to apply color formatting
 def color_format(val):
-    color_range = np.linspace(1.0, 11.0, num=256)
+    color_range = np.linspace(0, 1, num=256)
     color_index = int((val - 1.0) / 10.0 * 255)
-    color = f'rgb({255 - color_index}, {color_index}, 0)'
+    green = int(color_range[color_index] * 255)
+    red = int((1 - color_range[color_index]) * 255)
+    color = f'rgb({red}, {green}, 0)'
     return f'background-color: {color}'
 
-# Apply color formatting to 'Score' column
-styled_df = df.style.applymap(color_format, subset=['Score'])
+# Export DataFrame to HTML with color formatting and without index
+html = df.to_html(index=False, formatters={'Score': color_format})
 
-# Display styled DataFrame
-styled_df
+# Display HTML
+from IPython.display import display, HTML
+display(HTML(html))
