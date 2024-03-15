@@ -1,15 +1,22 @@
-+------------+--------------+-------+
-| Project ID | Associate ID | Score |
-+------------+--------------+-------+
-| SO1       | 212167      | 8.0  |
-+------------+--------------+-------+
-| SO2       | 2121        | 4.0  |
-+------------+--------------+-------+
-| SO3       | 221312      | 9.0  |
-+------------+--------------+-------+
-| SO4       | 2131        | 3.0  |
-+------------+--------------+-------+
+import pandas as pd
+import numpy as np
 
+# Your DataFrame
+data = {'Project ID': ['SO1', 'SO2', 'SO3', 'SO4'],
+        'Associate ID': [212167, 2121, 221312, 2131],
+        'Score': [8.0, 4.0, 9.0, 3.0]}
+df = pd.DataFrame(data)
 
-This is one data frame
-I want to sort the values from descending to ascending on the basis of column name ‘Score’. Also that I want to put light green color to light red in Score column cells. On the basis of 11.0  which will be light green to 1.0. which will be light red color numbers range. The color should variate automatically on the basis of whatever the values exists in score column.
+# Sort values based on 'Score' column
+df = df.sort_values(by='Score', ascending=True)
+
+# Define a function to apply color formatting
+def color_format(val):
+    color = 'lightgreen' if val >= 11.0 else 'lightcoral'
+    return f'background-color: {color}'
+
+# Apply color formatting to 'Score' column
+styled_df = df.style.applymap(color_format, subset=['Score'])
+
+# Display styled DataFrame
+styled_df
