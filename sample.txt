@@ -1,7 +1,9 @@
 def color_format(val):
-    color_range = np.linspace(0, 1, num=256)
-    color_index = int((val - 1.0) / 10.0 * 255)
-    green = int(color_range[color_index] * 255)
-    red = int((1 - color_range[color_index]) * 255)
+    # Scale the value to a range between 0 and 1
+    scaled_val = (val - 1.0) / 10.0
+    # Map the scaled value to a color range from red to green
+    red = int(max(0, min(255, (1 - scaled_val) * 255)))
+    green = int(max(0, min(255, scaled_val * 255)))
+    # Generate the RGB color code
     color = f'rgb({red}, {green}, 0)'
     return f'background-color: {color}'
