@@ -2,8 +2,9 @@ def color_format(val):
     # Scale the value to a range between 0 and 1
     scaled_val = (val - 1.0) / 10.0
     # Map the scaled value to a color range from red to green
-    red = int(max(0, min(255, (1 - scaled_val) * 255)))
-    green = int(max(0, min(255, scaled_val * 255)))
+    red = int(max(100, min(255, (1 - scaled_val) * 255)))
+    green = int(max(100, min(255, scaled_val * 255)))
+    blue = 150  # Set a constant value for blue
     # Generate the RGB color code
-    color = f'rgb({red}, {green}, 0)'
+    color = f'rgb({red}, {green}, {blue})'
     return f'background-color: {color}'
