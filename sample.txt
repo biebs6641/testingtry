@@ -12,7 +12,9 @@ df = df.sort_values(by='Score', ascending=True)
 
 # Define a function to apply color formatting
 def color_format(val):
-    color = 'lightgreen' if val >= 11.0 else 'lightcoral'
+    color_range = np.linspace(1.0, 11.0, num=256)
+    color_index = int((val - 1.0) / 10.0 * 255)
+    color = f'rgb({color_index}, {255 - color_index}, 0)'
     return f'background-color: {color}'
 
 # Apply color formatting to 'Score' column
