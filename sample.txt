@@ -19,8 +19,17 @@ def color_format(val):
     color = f'rgb({red}, {green}, 0)'
     return f'background-color: {color}'
 
-# Export DataFrame to HTML with color formatting and without index
-html = df.to_html(index=False, formatters={'Score': color_format})
+# Create a Styler object with color formatting
+styled_df = df.style.applymap(color_format, subset=['Score'])
+
+# Add borders to the table
+styled_df.set_table_styles([
+    {'selector': 'table', 'props': [('border-collapse', 'collapse'), ('border', '2px solid black')]},
+    {'selector': 'th, td', 'props': [('border', '1px solid black')]}
+])
+
+# Export Styler object to HTML
+html = styled_df.render()
 
 # Display HTML
 from IPython.display import display, HTML
