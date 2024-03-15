@@ -1,11 +1,15 @@
-# Your original dictionary
-original_dict = {
-    "Name": "Alice",
-    "Age": 30,
-    "City": "New York"
-}
++------------+--------------+-------+
+| Project ID | Associate ID | Score |
++------------+--------------+-------+
+| SO1       | 212167      | 8.0  |
++------------+--------------+-------+
+| SO2       | 2121        | 4.0  |
++------------+--------------+-------+
+| SO3       | 221312      | 9.0  |
++------------+--------------+-------+
+| SO4       | 2131        | 3.0  |
++------------+--------------+-------+
 
-# Convert all keys and values to lowercase using dict constructor
-lowercase_dict = dict((key.lower(), str(value).lower()) for key, value in original_dict.items())
 
-print(lowercase_dict)
+This is one data frame
+I want to sort the values from descending to ascending on the basis of column name ‘Score’. Also that I want to put light green color to light red in Score column cells. On the basis of 11.0  which will be light green to 1.0. which will be light red color numbers range. The color should variate automatically on the basis of whatever the values exists in score column.
