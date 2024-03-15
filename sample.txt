@@ -1,16 +1,3 @@
-import pandas as pd
-import numpy as np
-
-# Your DataFrame
-data = {'Project ID': ['SO1', 'SO2', 'SO3', 'SO4'],
-        'Associate ID': [212167, 2121, 221312, 2131],
-        'Score': [8.0, 4.0, 9.0, 3.0]}
-df = pd.DataFrame(data)
-
-# Sort values based on 'Score' column
-df = df.sort_values(by='Score', ascending=False)
-
-# Define a function to apply color formatting
 def color_format(val):
     color_range = np.linspace(0, 1, num=256)
     color_index = int((val - 1.0) / 10.0 * 255)
@@ -18,19 +5,3 @@ def color_format(val):
     red = int((1 - color_range[color_index]) * 255)
     color = f'rgb({red}, {green}, 0)'
     return f'background-color: {color}'
-
-# Create a Styler object with color formatting
-styled_df = df.style.applymap(color_format, subset=['Score'])
-
-# Add borders to the table
-styled_df.set_table_styles([
-    {'selector': 'table', 'props': [('border-collapse', 'collapse'), ('border', '2px solid black')]},
-    {'selector': 'th, td', 'props': [('border', '1px solid black')]}
-])
-
-# Export Styler object to HTML
-html = styled_df.render()
-
-# Display HTML
-from IPython.display import display, HTML
-display(HTML(html))
