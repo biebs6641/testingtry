@@ -1,21 +1,21 @@
 ,Project ID,Associate ID,Associate Primary Skill,Associate Secondary Skill,Required Primary Skill,Required Secondary Skill,Score
-2,SO00004,2331363,functional testing,"selenium using java, salesforce",functional testing,"selenium using java, salesforce",8.40
-5,SO00004,428665,functional testing,selenium using java,functional testing,"selenium using java, salesforce",3.64
-7,SO00004,526698,selenium using java,selenium using java,functional testing,"selenium using java, salesforce",3.64
-1,SO00004,2330927,functional testing,"api testing, program management, salesforce",functional testing,"selenium using java, salesforce",3.64
-16,SO00004,2055512,functional testing,"selenium using java, salesforce",functional testing,"selenium using java, salesforce",3.36
-17,SO00004,833883,functional testing,salesforce,functional testing,"selenium using java, salesforce",3.08
-4,SO00004,2090930,functional testing,selenium using java,functional testing,"selenium using java, salesforce",3.08
-11,SO00004,2080681,functional testing,"selenium using java, ui/ux testing",functional testing,"selenium using java, salesforce",2.52
-12,SO00004,348375,functional testing,"selenium using java, api testing",functional testing,"selenium using java, salesforce",2.52
-19,SO00004,2082585,selenium using c#,"selenium using java, api testing",functional testing,"selenium using java, salesforce",1.96
-14,SO00004,2332087,functional testing,selenium using java,functional testing,"selenium using java, salesforce",1.96
-8,SO00004,2090781,ui/ux testing,selenium using java,functional testing,"selenium using java, salesforce",1.96
-15,SO00004,549804,functional testing,api testing,functional testing,"selenium using java, salesforce",1.68
-0,SO00004,422210,functional testing,none,functional testing,"selenium using java, salesforce",1.68
-9,SO00004,750327,functional testing,functional testing,functional testing,"selenium using java, salesforce",1.68
-18,SO00004,2082295,functional testing,functional testing,functional testing,"selenium using java, salesforce",1.40
-10,SO00004,2108215,selenium using java,none,functional testing,"selenium using java, salesforce",1.12
-6,SO00004,254939,functional testing,tosca,functional testing,"selenium using java, salesforce",0.56
-13,SO00004,2092861,etl testing,none,functional testing,"selenium using java, salesforce",0.00
-3,SO00004,2329983,compliance based on retail,none,functional testing,"selenium using java, salesforce",0.00
+2,SO04,23,functional testing,"selenium using java, salesforce",functional testing,"selenium using java, salesforce",8.40
+5,SO04,4,functional testing,selenium using java,functional testing,"selenium using java, salesforce",3.64
+7,SO04,58,selenium using java,selenium using java,functional testing,"selenium using java, salesforce",3.64
+1,SO04,27,functional testing,"api testing, program management, salesforce",functional testing,"selenium using java, salesforce",3.64
+16,S004,2,functional testing,"selenium using java, salesforce",functional testing,"selenium using java, salesforce",3.36
+17,S004,83,functional testing,salesforce,functional testing,"selenium using java, salesforce",3.08
+4,SO004,230,functional testing,selenium using java,functional testing,"selenium using java, salesforce",3.08
+11,S0004,681,functional testing,"selenium using java, ui/ux testing",functional testing,"selenium using java, salesforce",2.52
+12,S004,75,functional testing,"selenium using java, api testing",functional testing,"selenium using java, salesforce",2.52
+19,S004,85,selenium using c#,"selenium using java, api testing",functional testing,"selenium using java, salesforce",1.96
+14,S004,2087,functional testing,selenium using java,functional testing,"selenium using java, salesforce",1.96
+8,SO04,281,ui/ux testing,selenium using java,functional testing,"selenium using java, salesforce",1.96
+15,S004,04,functional testing,api testing,functional testing,"selenium using java, salesforce",1.68
+0,SO04,410,functional testing,none,functional testing,"selenium using java, salesforce",1.68
+9,SO04,7897,functional testing,functional testing,functional testing,"selenium using java, salesforce",1.68
+18,S004,295,functional testing,functional testing,functional testing,"selenium using java, salesforce",1.40
+10,S004,215,selenium using java,none,functional testing,"selenium using java, salesforce",1.12
+6,SO04,254,functional testing,tosca,functional testing,"selenium using java, salesforce",0.56
+13,S004,201,etl testing,none,functional testing,"selenium using java, salesforce",0.00
+3,SO04,232,compliance based on retail,none,functional testing,"selenium using java, salesforce",0.00
