@@ -1,10 +1,39 @@
+import pandas as pd
+import numpy as np
+
+# Your DataFrame
+data = {'Project ID': ['SO1', 'SO2', 'SO3', 'SO4'],
+        'Associate ID': [212167, 2121, 221312, 2131],
+        'Score': [8.0, 4.0, 9.0, 3.0]}
+df = pd.DataFrame(data)
+
+# Sort values based on 'Score' column
+df = df.sort_values(by='Score', ascending=False)
+
+# Define a function to apply color formatting to the header row
+def color_header_row(s):
+    if s.name == 0:
+        return ['background-color: lightblue' for _ in s]
+    return ['' for _ in s]
+
+# Apply color formatting to the header row
+styled_df = df.style.apply(color_header_row, axis=1, subset=pd.IndexSlice[:, :])
+
+# Define a function to apply color formatting to the 'Score' column
 def color_format(val):
-    # Scale the value to a range between 0 and 1
     scaled_val = (val - 1.0) / 10.0
-    # Map the scaled value to a color range from red to green
     red = int(max(100, min(255, (1 - scaled_val) * 255)))
     green = int(max(100, min(255, scaled_val * 255)))
-    blue = 150  # Set a constant value for blue
-    # Generate the RGB color code
+    blue = 150
     color = f'rgb({red}, {green}, {blue})'
     return f'background-color: {color}'
+
+# Apply color formatting to 'Score' column
+styled_df = styled_df.applymap(color_format, subset=['Score'])
+
+# Export Styler object to HTML
+html = styled_df.render()
+
+# Display HTML
+from IPython.display import display, HTML
+display(HTML(html))
