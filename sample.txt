@@ -23,8 +23,8 @@ def color_format(val):
     color = f'rgb({red}, {green}, {blue})'
     return f'background-color: {color}'
 
-# Apply color formatting to Score column
-styled_df = df.style.apply(lambda x: x.apply(color_format) if x.name == 'Score' else x, axis=0)
+# Apply color formatting to Score column using applymap
+styled_df = df.style.applymap(color_format, subset=pd.IndexSlice[:, 'Score'])
 
 # Set CSS properties for the HTML report
 styles = [
