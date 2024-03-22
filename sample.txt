@@ -36,9 +36,10 @@ styles = [
 # Apply the remaining styles to other columns using lambda function
 styled_df = styled_df.apply(lambda x: [styles[1] if col != 'Score' else {} for col in x], axis=0)
 
-styled_df.set_table_styles(styles)
+# Convert the Styler object to HTML
+html = styled_df.render()
 
-# Render HTML and save to file
+# Save the HTML to a file
 with open('Report.html', 'w') as f:
     f.write('<h1 style="text-align: center; font-weight: bold;">Associate Project Matchmaker Report</h1>')
-    f.write(styled_df.render())
+    f.write(html)
