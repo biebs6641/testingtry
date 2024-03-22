@@ -1,5 +1,5 @@
 styles = [
-    {"selector": "table", "props": [("border-collapse", "collapse"), ("border", "2px solid black")]},
-    {"selector": "th", "props": [("background-color", "lightblue"), ("border", "1px solid black"), ("text-align", "center"), ("font-weight", "bold")]},
-    {"selector": "td:not([data-column='Score'])", "props": [("background-color", "lightyellow"), ("border", "1px solid black")]},
+    dict(selector="th", props=[("background-color", "lightblue"), ("border", "1px solid black"), ("text-align", "center"), ("font-weight", "bold")]),
+    dict(selector="td", props=[("background-color", "lightyellow"), ("border", "1px solid black")]),
+    dict(selector="table", props=[("border-collapse", "collapse"), ("border", "2px solid black")])
 ]
