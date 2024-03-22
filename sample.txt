@@ -24,7 +24,7 @@ def color_format(val):
     return f'background-color: {color}'
 
 # Apply color formatting to Score column
-styled_df = df.style.applymap(color_format, subset=['Score'])
+styled_df = df.style.apply(lambda x: x.apply(color_format) if x.name == 'Score' else x, axis=0)
 
 # Set CSS properties for the HTML report
 styles = [
