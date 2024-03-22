@@ -1,41 +1,5 @@
-import pandas as pd
-
-# Sample DataFrame
-data = {
-    'Project ID': ['SO1', 'SO2', 'SO3', 'SO4'],
-    'Associate ID': [212167, 2121, 221312, 2131],
-    'Associate Primary skills': ['JavaScript', 'Java', 'Docker', 'GCP, JAVA'],
-    'Associate Secondary skill': ['AWS', 'Selenium', 'State', 'AWS 2'],
-    'Score': [9.0, 6.0, 4.0, 3.0]
-}
-
-df = pd.DataFrame(data)
-
-# Function to apply color to score column
-def color_format(val):
-    # Scale the value to a range between 0 and 1
-    scaled_val = (float(val) - 1.0) / 10.0
-    # Map the scaled value to a color range from red to green
-    red = int(max(100, min(255, (1 - scaled_val) * 255)))
-    green = int(max(100, min(255, scaled_val * 255)))
-    blue = 150  # Set a constant value for blue
-    # Generate the RGB color code
-    color = f'rgb({red}, {green}, {blue})'
-    return f'background-color: {color}'
-
-# Apply color formatting to Score column using applymap
-styled_df = df.style.applymap(color_format, subset=pd.IndexSlice[:, 'Score'])
-
-# Set CSS properties for the HTML report
 styles = [
-    dict(selector="th", props=[("background-color", "lightblue"), ("border", "1px solid black"), ("text-align", "center"), ("font-weight", "bold")]),
-    dict(selector="td", props=[("background-color", "lightyellow"), ("border", "1px solid black")]),
-    dict(selector="table", props=[("border-collapse", "collapse"), ("border", "2px solid black")])
+    {"selector": "table", "props": [("border-collapse", "collapse"), ("border", "2px solid black")]},
+    {"selector": "th", "props": [("background-color", "lightblue"), ("border", "1px solid black"), ("text-align", "center"), ("font-weight", "bold")]},
+    {"selector": "td:not([data-column='Score'])", "props": [("background-color", "lightyellow"), ("border", "1px solid black")]},
 ]
-
-styled_df.set_table_styles(styles)
-
-# Render HTML and save to file
-with open('Report.html', 'w') as f:
-    f.write('<h1 style="text-align: center; font-weight: bold;">Associate Project Matchmaker Report</h1>')
-    f.write(styled_df.render())
