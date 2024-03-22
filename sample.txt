@@ -34,7 +34,7 @@ styles = [
 ]
 
 # Apply the remaining styles to other columns using lambda function
-styled_df = styled_df.apply(lambda x: styles[1] if x.name != 'Score' else {}, axis=0)
+styled_df = styled_df.apply(lambda x: [styles[1] if col != 'Score' else {} for col in x], axis=0)
 
 styled_df.set_table_styles(styles)
 
