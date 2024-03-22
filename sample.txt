@@ -1,23 +1,32 @@
-+------------+--------------+--------------------------+---------------------------+-------+
-| Project ID | Associate ID | Associate Primary skills | Associate Secondary skill | Score |
-+------------+--------------+--------------------------+---------------------------+-------+
-| SO1        | 212167       | JavaScript               | AWS                       | 9.0   |
-+------------+--------------+--------------------------+---------------------------+-------+
-| SO2        | 2121         | Java                     | Selenium                  | 6.0   |
-+------------+--------------+--------------------------+---------------------------+-------+
-| SO3        | 221312       | Docker                   | State                     | 4.0   |
-+------------+--------------+--------------------------+---------------------------+-------+
-| SO4        | 2131         | GCP, JAVA                | AWS 2                     | 3.0   |
-+------------+--------------+--------------------------+---------------------------+-------+
+import pandas as pd
 
+# Sample DataFrame
+data = {'Project ID': ['SO1', 'SO2', 'SO3', 'SO4'],
+        'Associate ID': [212167, 2121, 221312, 2131],
+        'Associate Primary skills': ['JavaScript', 'Java', 'Docker', 'GCP, JAVA'],
+        'Associate Secondary skill': ['AWS', 'Selenium', 'State', 'AWS 2'],
+        'Score': [9.0, 6.0, 4.0, 3.0]}
 
-This is my Data frame df, I want to convert it into beautiful HTML report
+df = pd.DataFrame(data)
 
-Requirements:
-I want the heading in the report as Associate Project Matchmaker report in bold letter, aligned centre in report
-The Column names row i.e. first row should be light blue.
-The light yellow color should be filled in all the cells except Score column & First Row as it is supposed to be light blue.
-Table should be Beautifully bordered and Good looking
-Also the border of table should be dark black.
-I want to put light green color to light red in Score Column cells. On the basis of 11.0, which will be light green to 1.0 which will be light red color numbers range. The color should variate automatically on the basis of whatever the value exists in ‘Score’ column.
-And at last applying all this it should export to file named as ‘Report.html’
+# Function to apply color to score column
+def color_format(val):
+    color_range = ['#FF0000', '#FF3300', '#FF6600', '#FF9900', '#FFCC00', '#FFFF00', '#CCFF00', '#99FF00', '#66FF00', '#33FF00', '#00FF00']
+    return 'background-color: {}'.format(color_range[int(val) - 1])
+
+# Apply color formatting to Score column
+styled_df = df.style.applymap(color_format, subset=['Score'])
+
+# Set CSS properties for the HTML report
+styles = [
+    dict(selector="th", props=[("background-color", "lightblue"), ("border", "1px solid black"), ("text-align", "center"), ("font-weight", "bold")]),
+    dict(selector="td", props=[("background-color", "lightyellow"), ("border", "1px solid black")]),
+    dict(selector="table", props=[("border-collapse", "collapse"), ("border", "2px solid black")])
+]
+
+styled_df.set_table_styles(styles)
+
+# Render HTML and save to file
+with open('Report.html', 'w') as f:
+    f.write('<h1 style="text-align: center; font-weight: bold;">Associate Project Matchmaker Report</h1>')
+    f.write(styled_df.render())
