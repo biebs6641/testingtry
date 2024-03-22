@@ -1,25 +1,23 @@
-import pandas as pd
++------------+--------------+--------------------------+---------------------------+-------+
+| Project ID | Associate ID | Associate Primary skills | Associate Secondary skill | Score |
++------------+--------------+--------------------------+---------------------------+-------+
+| SO1        | 212167       | JavaScript               | AWS                       | 9.0   |
++------------+--------------+--------------------------+---------------------------+-------+
+| SO2        | 2121         | Java                     | Selenium                  | 6.0   |
++------------+--------------+--------------------------+---------------------------+-------+
+| SO3        | 221312       | Docker                   | State                     | 4.0   |
++------------+--------------+--------------------------+---------------------------+-------+
+| SO4        | 2131         | GCP, JAVA                | AWS 2                     | 3.0   |
++------------+--------------+--------------------------+---------------------------+-------+
 
-# Your DataFrame
-data = {
-    'Project ID': ['SO1', 'SO2', 'SO3', 'SO4'],
-    'Associate ID': [212167, 2121, 221312, 2131],
-    'Associate Primary skills': ['JavaScript', 'Java', 'Docker', 'GCP, JAVA'],
-    'Associate Secondary skill': ['AWS', 'Selenium', 'State', 'AWS 2'],
-    'Score': [9.0, 6.0, 4.0, 3.0]
-}
-df = pd.DataFrame(data)
 
-# Styling function for the column names row
-def color_header(s):
-    return f'background-color: {"lightblue" if s.name != "Score" else "white"}'
+This is my Data frame df, I want to convert it into beautiful HTML report
 
-# Styling the entire DataFrame
-styled_df = df.style\
-    .set_caption('Associate Project Matchmaker report')\
-    .applymap(lambda x: 'background-color: lightyellow' if isinstance(x, str) else '', subset=pd.IndexSlice[:, :'Score'])\
-    .applymap(lambda x: 'border: 1px solid black', subset=pd.IndexSlice[:, :])\
-    .apply(color_header, axis=None)
-
-# Exporting to HTML
-styled_df.to_file('Report.html', render_links=True)
+Requirements:
+I want the heading in the report as Associate Project Matchmaker report in bold letter, aligned centre in report
+The Column names row i.e. first row should be light blue.
+The light yellow color should be filled in all the cells except Score column & First Row as it is supposed to be light blue.
+Table should be Beautifully bordered and Good looking
+Also the border of table should be dark black.
+I want to put light green color to light red in Score Column cells. On the basis of 11.0, which will be light green to 1.0 which will be light red color numbers range. The color should variate automatically on the basis of whatever the value exists in ‘Score’ column.
+And at last applying all this it should export to file named as ‘Report.html’
