@@ -1,45 +1,23 @@
-import pandas as pd
+@echo off
 
-# Sample DataFrame
-data = {
-    'Project ID': ['SO1', 'SO2', 'SO3', 'SO4'],
-    'Associate ID': [212167, 2121, 221312, 2131],
-    'Associate Primary skills': ['JavaScript', 'Java', 'Docker', 'GCP, JAVA'],
-    'Associate Secondary skill': ['AWS', 'Selenium', 'State', 'AWS 2'],
-    'Score': [9.0, 6.0, 4.0, 3.0]
-}
+REM Check if Python is installed
+python --version >nul 2>&1
+if %errorlevel% neq 0 (
+    echo Python is not installed on this system
+    exit /b 1
+)
 
-df = pd.DataFrame(data)
+REM Check if dependencies are installed
+for /f %%i in (requirements.txt) do (
+    pip show %%i >nul 2>&1
+    if %errorlevel% neq 0 (
+        echo Installing dependency: %%i
+        pip install %%i
+    )
+)
 
-# Function to apply color to score column
-def color_format(val):
-    # Scale the value to a range between 0 and 1
-    scaled_val = (float(val) - 1.0) / 10.0
-    # Map the scaled value to a color range from red to green
-    red = int(max(100, min(255, (1 - scaled_val) * 255)))
-    green = int(max(100, min(255, scaled_val * 255)))
-    blue = 150  # Set a constant value for blue
-    # Generate the RGB color code
-    color = f'rgb({red}, {green}, {blue})'
-    return f'background-color: {color}'
+REM Run the Python project
+python main.py
 
-# Apply color formatting to Score column using applymap
-styled_df = df.style.applymap(color_format, subset=pd.IndexSlice[:, 'Score'])
-
-# Set CSS properties for the HTML report
-styles = [
-    dict(selector="th", props=[("background-color", "lightblue"), ("border", "1px solid black"), ("text-align", "center"), ("font-weight", "bold")]),
-    dict(selector="td", props=[("background-color", "lightyellow"), ("border", "1px solid black")]),
-    dict(selector="table", props=[("border-collapse", "collapse"), ("border", "2px solid black")])
-]
-
-# Apply the remaining styles to other columns using lambda function
-styled_df = styled_df.apply(lambda x: [styles[1] if col != 'Score' else {} for col in x], axis=0)
-
-# Convert the Styler object to HTML
-html = styled_df.render()
-
-# Save the HTML to a file
-with open('Report.html', 'w') as f:
-    f.write('<h1 style="text-align: center; font-weight: bold;">Associate Project Matchmaker Report</h1>')
-    f.write(html)
+REM Exit the batch script
+exit /b 0
