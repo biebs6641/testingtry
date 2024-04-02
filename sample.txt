@@ -1,29 +1,61 @@
 import streamlit as st
+import time
+import random
 
-# Title of the calculator app
-st.title("Simple Calculator App")
+# Define the size of the grid
+GRID_SIZE = 20
 
-# Input fields for the user to enter numbers
-num1 = st.number_input("Enter the first number:")
-num2 = st.number_input("Enter the second number:")
+# Define the initial snake position and direction
+snake = [(0, 0)]
+direction = (1, 0)
 
-# Select box to choose the operation
-operation = st.selectbox("Select the operation", ["Addition", "Subtraction", "Multiplication", "Division"])
+# Define the initial food position
+food = (random.randint(0, GRID_SIZE - 1), random.randint(0, GRID_SIZE - 1))
 
-# Button to perform the calculation
-if st.button("Calculate"):
-    if operation == "Addition":
-        result = num1 + num2
-        st.success(f"The result of {num1} + {num2} is {result}")
-    elif operation == "Subtraction":
-        result = num1 - num2
-        st.success(f"The result of {num1} - {num2} is {result}")
-    elif operation == "Multiplication":
-        result = num1 * num2
-        st.success(f"The result of {num1} * {num2} is {result}")
-    elif operation == "Division":
-        if num2 == 0:
-            st.error("Division by zero is not allowed")
-        else:
-            result = num1 / num2
-            st.success(f"The result of {num1} / {num2} is {result}")
+# Define a function to update the snake's position
+def update_snake():
+    global snake, direction, food
+    # Calculate the new head position based on the current direction
+    head = snake[0]
+    new_head = (head[0] + direction[0], head[1] + direction[1])
+
+    # Check if the new head position is within the grid
+    if new_head[0] < 0 or new_head[0] >= GRID_SIZE or new_head[1] < 0 or new_head[1] >= GRID_SIZE:
+        st.text("Game Over! Your score: {}".format(len(snake)))
+        st.stop()
+
+    # Check if the new head position is on the snake itself
+    if new_head in snake:
+        st.text("Game Over! Your score: {}".format(len(snake)))
+        st.stop()
+
+    # Check if the new head position is on the food
+    if new_head == food:
+        # Generate a new food position
+        food = (random.randint(0, GRID_SIZE - 1), random.randint(0, GRID_SIZE - 1))
+    else:
+        # Remove the tail of the snake
+        snake.pop()
+
+    # Add the new head to the snake
+    snake.insert(0, new_head)
+
+# Define the main game loop
+while True:
+    st.text("Score: {}".format(len(snake)))
+    # Draw the grid
+    for i in range(GRID_SIZE):
+        for j in range(GRID_SIZE):
+            if (i, j) in snake:
+                st.text("██")
+            elif (i, j) == food:
+                st.text("🍎")
+            else:
+                st.text("  ")
+        st.text("\n")
+
+    # Update the snake's position
+    update_snake()
+
+    # Pause for a short time to control the speed of the game
+    time.sleep(0.1)
