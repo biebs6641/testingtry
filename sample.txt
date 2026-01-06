@@ -1,61 +1,44 @@
-import streamlit as st
-import time
-import random
+-- 1. Clean up previous tables if they exist
+DROP TABLE IF EXISTS employees;
+DROP TABLE IF EXISTS departments;
 
-# Define the size of the grid
-GRID_SIZE = 20
+-- 2. Create the Departments table
+CREATE TABLE departments (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50)
+);
 
-# Define the initial snake position and direction
-snake = [(0, 0)]
-direction = (1, 0)
+-- 3. Create the Employees table
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    dept_id INT -- Note: No Foreign Key constraint added intentionally for flexibility in learning joins
+);
 
-# Define the initial food position
-food = (random.randint(0, GRID_SIZE - 1), random.randint(0, GRID_SIZE - 1))
+-- 4. Insert Data into Departments
+-- Notice: 'Marketing' and 'Operations' have no employees assigned to them yet.
+INSERT INTO departments (dept_id, dept_name) VALUES
+(101, 'Engineering'),
+(102, 'Human Resources'),
+(103, 'Sales'),
+(104, 'Marketing'),
+(105, 'Operations');
 
-# Define a function to update the snake's position
-def update_snake():
-    global snake, direction, food
-    # Calculate the new head position based on the current direction
-    head = snake[0]
-    new_head = (head[0] + direction[0], head[1] + direction[1])
+-- 5. Insert Data into Employees (10 Rows)
+-- Notice: 'Diana' and 'Jack' have NULL as their dept_id (they are not assigned a department).
+INSERT INTO employees (emp_id, emp_name, dept_id) VALUES
+(1, 'Alice', 101),
+(2, 'Bob', 102),
+(3, 'Charlie', 101),
+(4, 'Diana', NULL),
+(5, 'Evan', 103),
+(6, 'Frank', 101),
+(7, 'Grace', 102),
+(8, 'Heidi', 103),
+(9, 'Ivan', 101),
+(10, 'Jack', NULL);
 
-    # Check if the new head position is within the grid
-    if new_head[0] < 0 or new_head[0] >= GRID_SIZE or new_head[1] < 0 or new_head[1] >= GRID_SIZE:
-        st.text("Game Over! Your score: {}".format(len(snake)))
-        st.stop()
 
-    # Check if the new head position is on the snake itself
-    if new_head in snake:
-        st.text("Game Over! Your score: {}".format(len(snake)))
-        st.stop()
 
-    # Check if the new head position is on the food
-    if new_head == food:
-        # Generate a new food position
-        food = (random.randint(0, GRID_SIZE - 1), random.randint(0, GRID_SIZE - 1))
-    else:
-        # Remove the tail of the snake
-        snake.pop()
 
-    # Add the new head to the snake
-    snake.insert(0, new_head)
-
-# Define the main game loop
-while True:
-    st.text("Score: {}".format(len(snake)))
-    # Draw the grid
-    for i in range(GRID_SIZE):
-        for j in range(GRID_SIZE):
-            if (i, j) in snake:
-                st.text("██")
-            elif (i, j) == food:
-                st.text("🍎")
-            else:
-                st.text("  ")
-        st.text("\n")
-
-    # Update the snake's position
-    update_snake()
-
-    # Pause for a short time to control the speed of the game
-    time.sleep(0.1)
+select * from departments;
